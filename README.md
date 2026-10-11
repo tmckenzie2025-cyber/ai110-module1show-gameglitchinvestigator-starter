@@ -25,19 +25,27 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- A Streamlit number guessing game. The player picks a difficulty, guesses a secret number, and gets "Go HIGHER" or "Go LOWER" hints until they win or run out of attempts.
+
+- The hints pointed the wrong way. A guess below the secret said "Go LOWER."
+- New Game did not clear a win. The "You already won" message stayed on screen.
+- The attempts counter lagged one guess behind.
+
+- Moved `check_guess` into `logic_utils.py`, swapped the reversed hint messages, and removed the code that turned the secret into text on even attempts.
+- Updated the New Game button to reset the game status, clear the guess history, and pick the secret from the correct range for the difficulty.
+- Updated the starter tests to match the function's two return values and added a test that checks the "Too High" message says to go lower.
+
 
 ## 📸 Demo Walkthrough
 
 Describe your fixed game in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. Start the game on Normal difficulty (range 1 to 100) and open Developer Debug Info to see the secret, for example 58.
+2. User enters a guess of 40. Game returns "Too Low" with the hint "Go HIGHER!"
+3. User enters a guess of 70. Game returns "Too High" with the hint "Go LOWER!"
+4. User enters a guess of 58. Balloons appear with "You won! The secret was 58."
+5. User clicks New Game. The win message clears and a new round starts with a new secret.
+
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
 

@@ -67,6 +67,6 @@ Document at least 3 bugs you found. Add rows as needed.
   - This could be a testing habit, a prompting strategy, or a way you used Git.
     I want to keep giving the AI tight specific prompts that say what to change and what not to touch like “do not change check_guess.” It kept every change small and easy to review and I never had to undo anything. I also want to keep tracing the code by hand with real numbers before running it because that is how I understood why each bug happened.
 - What is one thing you would do differently next time you work with AI on a coding task?
-    Next time I would read the existing tests before trusting them.
+    Next time I would read the existing tests before trusting them. The starter tests only checked the outcome word, like “Too High,” which was never broken. That means they would have passed even with the reversed hints so they gave a false sense that the code worked. I would also check that the tests match how the function actually works since these expected one value when check_guess returns two.
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
     The game was written by an AI that claimed it was production-ready, and it still had reversed hints, a broken reset, and a counter that lagged behind. I now treat AI-generated code as a first draft that needs to be traced, tested, and played before I trust it.

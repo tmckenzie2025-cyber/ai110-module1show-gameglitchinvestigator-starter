@@ -114,10 +114,12 @@ with col2:
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
 
-# FIXME: Logic breaks here (Bug 2)
+# FIXME:FIX: New Game now resets status, history, and secret range
 if new_game:
     st.session_state.attempts = 0
-    st.session_state.secret = random.randint(1, 100)
+    st.session_state.status = "playing"
+    st.session_state.history = []
+    st.session_state.secret = random.randint(low, high)
     st.success("New game started.")
     st.rerun()
 

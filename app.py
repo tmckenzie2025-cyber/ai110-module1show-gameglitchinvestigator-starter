@@ -28,7 +28,7 @@ def parse_guess(raw: str):
 
     return True, value, None
 
-
+# FIXME: Logic breaks here (Bug 1)
 def check_guess(guess, secret):
     if guess == secret:
         return "Win", "🎉 Correct!"
@@ -131,6 +131,7 @@ with col2:
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
 
+# FIXME: Logic breaks here (Bug 2)
 if new_game:
     st.session_state.attempts = 0
     st.session_state.secret = random.randint(1, 100)

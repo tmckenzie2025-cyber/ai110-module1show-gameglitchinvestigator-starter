@@ -36,30 +36,37 @@ Document at least 3 bugs you found. Add rows as needed.
 
 ## 2. How did you use AI as a teammate?
 
-- Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
+- Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)? Claude
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
+    While moving check_guess into logic_utils.py the AI removed a try/except TypeError block without being asked. It explained that the block only existed to handle the secret being converted to text on even attempts which I had removed. I verified this by tracing a guess of 9 against a secret of 50 by hand and the new pytest test passing confirmed it.
 - Give one example of an AI suggestion you did not accept as written (including what the AI suggested, why you rejected or changed it, and how you verified your version). It does not have to be a suggestion that was wrong: over-engineered, out of scope, harder to read, or a poor fit for this codebase all count.
+    Most of the AI suggestions on this project were correct and simple and they matched what I needed so there was very little I had to reject. The only suggestion I did not follow was a recommendation to make a separate commit just to fix a small typo in one of my fix comments. I did not think a whole commit was necessary for a one-line comment at that point so I fixed the typo by hand and included it with my reflection updates instead. I verified the change by checking that the comment in app.py read correctly before staging it and confirming it appeared in my commit history with the reflection work.
 
 ---
 
 ## 3. Debugging and testing your fixes
 
-- How did you decide whether a bug was really fixed?
+- How did you decide whether a bug was really fixed? 
+    I used three checks for each bug. First I traced the code by hand with specific numbers to confirm the logic made sense. Then I ran python -m pytest to confirm the automated tests passed. Finally I played the live game with python -m streamlit run app.py and used the Developer Debug Info panel to see the secret number and confirm the game behaved correctly.
 - Describe at least one test you ran (manual or using pytest)  
   and what it showed you about your code.
+    After moving check_guess into logic_utils.py I ran the starter tests and all three failed. The tests expected a single value like “Win” but check_guess returns two values the outcome and the hint message. This showed me the tests were written for a different version of the function not that my fix was wrong. I also realized the starter tests only checked the outcome word which was never broken so they could not have caught the reversed hints. After updating the tests and adding a new test that checks a guess of 60 against a secret of 50 returns “Too High” with a message telling the player to go lower all 4 tests passed. For Bug 2 I tested manually by winning a game and clicking New Game which cleared the win message. During that test I also noticed my old guess stayed in the input box which I noted as a minor issue outside the scope of this fix.
 - Did AI help you design or understand any tests? How?
-
+    Yes. The AI updated the three starter tests so they unpack the two values check_guess returns and only check the outcome. It also wrote the new test that confirms the “Too High” message tells the player to go lower. I told it not to change check_guess itself because app.py expects two values back and changing the function would have broken the game.
 ---
 
 ## 4. What did you learn about Streamlit and state?
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
-
+    Every time you click a button or type in a box Streamlit runs the whole script again from top to bottom. That is called a rerun. Normally that would wipe out every variable so Streamlit gives you session state which is like a notebook that survives each rerun and remembers things like the secret number, attempts, and whether you already won.
 ---
 
 ## 5. Looking ahead: your developer habits
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
   - This could be a testing habit, a prompting strategy, or a way you used Git.
+    I want to keep giving the AI tight specific prompts that say what to change and what not to touch like “do not change check_guess.” It kept every change small and easy to review and I never had to undo anything. I also want to keep tracing the code by hand with real numbers before running it because that is how I understood why each bug happened.
 - What is one thing you would do differently next time you work with AI on a coding task?
+    Next time I would read the existing tests before trusting them.
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+    The game was written by an AI that claimed it was production-ready, and it still had reversed hints, a broken reset, and a counter that lagged behind. I now treat AI-generated code as a first draft that needs to be traced, tested, and played before I trust it.
